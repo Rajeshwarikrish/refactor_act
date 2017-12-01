@@ -1,4 +1,14 @@
 <?php
+use \PDO;
+use classes\db\dbConn;
+use classes\collection\collection;
+use classes\collection\accounts;
+use classes\collection\todos;
+use classes\model\model;
+use classes\model\account;
+use classes\model\todo;
+use classes\table\table;
+
 ini_set('display_errors','On');
 error_reporting(E_ALL);
 /*include 'dbConn.php';
@@ -9,17 +19,18 @@ include 'table.php';
 
 class myLoader {
   public static function autoload($class) {
-    include 'classes/' . $class . '.php';
+    $file = str_replace('\\','/',$class) . '.php';
+    include $file;
   }
 }
 
 spl_autoload_register(array('myLoader', 'autoload'));
 
 
-accounts::create();
+//accounts::create();
 $records = accounts::findAll();
 $record = accounts::findOne(1);
-$rec = new account();
+$rec = new classes\model\account;
 $heading = $rec->getHeading();
 //echo '<center>';
 echo '<h2> FindAll() Function on Accounts Table</h2>';
@@ -42,9 +53,9 @@ $rec->delete(8);
 $acc = accounts::findAll();
 echo table::create($heading,$acc);
 
-todos::create();
+//todos::create();
 $records = todos::findAll();
-$val = new todo();
+$val = new classes\model\todo;
 $heading = $val->getHeading();
 echo '<hr><h2> FindAll() Function on Todos Table</h2>';
 echo table::create($heading,$records);
